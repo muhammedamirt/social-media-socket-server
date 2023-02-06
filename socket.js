@@ -18,11 +18,8 @@ io.on("connection", (socket) => {
                 socketId: socket.id,
             });
         }
-
-
         io.emit("get-users", activeUsers);
     });
-
     //send message
     socket.on("send-message", (data) => {
         const { receiverId } = data
@@ -31,7 +28,6 @@ io.on("connection", (socket) => {
             io.to(user.socketId).emit("receive-message", data)
         }
     });
-
     socket.on("disconnect", () => {
         activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
         io.emit("get-users", activeUsers);
